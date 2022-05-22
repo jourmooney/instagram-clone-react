@@ -260,7 +260,11 @@ function App() {
 
       <div>
         {authToken ? (
-          <ImageUpload authToken={authToken} authTokenType={authTokenType} />
+          <ImageUpload
+            authToken={authToken}
+            authTokenType={authTokenType}
+            userId={userId}
+          />
         ) : (
           <h3>You need to login to upload</h3>
         )}
