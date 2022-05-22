@@ -117,7 +117,6 @@ function App() {
         throw response;
       })
       .then((data) => {
-        console.log(data);
         setAuthToken(data.access_token);
         setAuthTokenType(data.token_type);
         setUserId(data.user_id);
@@ -260,7 +259,11 @@ function App() {
       </div>
 
       <div>
-        {authToken ? <ImageUpload /> : <h3>You need to login to upload</h3>}
+        {authToken ? (
+          <ImageUpload authToken={authToken} authTokenType={authTokenType} />
+        ) : (
+          <h3>You need to login to upload</h3>
+        )}
       </div>
     </div>
   );
