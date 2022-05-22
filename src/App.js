@@ -41,10 +41,32 @@ function App() {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
+    setAuthToken(window.localStorage.getItem("authToken"));
+    setAuthTokenType(window.localStorage.getItem("authTokenType"));
+    setUsername(window.localStorage.getItem("username"));
+    setUserId(window.localStorage.getItem("userId"));
+  }, []);
+
+  useEffect(() => {
+    authToken
+      ? window.localStorage.setItem("authToken", authToken)
+      : window.localStorage.removeItem("authToken");
+    authTokenType
+      ? window.localStorage.setItem("authTokenType", authTokenType)
+      : window.localStorage.removeItem("authTokenType");
+    username
+      ? window.localStorage.setItem("username", username)
+      : window.localStorage.removeItem("username");
+    userId
+      ? window.localStorage.setItem("userId", userId)
+      : window.localStorage.removeItem("userId");
+  }, [authToken, authTokenType, userId]);
+
+  useEffect(() => {
     fetch(BASE_URL + "post/all")
       .then((response) => {
         const json = response.json();
-        console.log(json);
+        // console.log(json);
         if (response.ok) {
           return json;
         }
@@ -95,7 +117,7 @@ function App() {
       .then((data) => {
         console.log(data);
         setAuthToken(data.access_token);
-        setAuthToken(data.token_type);
+        setAuthTokenType(data.token_type);
         setUserId(data.user_id);
         setUsername(data.username);
       })
