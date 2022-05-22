@@ -39,6 +39,7 @@ function App() {
   const [authToken, setAuthToken] = useState(null);
   const [authTokenType, setAuthTokenType] = useState(null);
   const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     setAuthToken(window.localStorage.getItem("authToken"));
@@ -129,6 +130,8 @@ function App() {
     setOpenSignIn(false);
   };
 
+  const signUp = (event) => {};
+
   const signOut = (event) => {
     setAuthToken(null);
     setAuthToken(null);
@@ -166,6 +169,42 @@ function App() {
           </form>
         </div>
       </Modal>
+
+      <Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app_signin">
+            <center>
+              <img
+                src="https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png"
+                alt="Instagram"
+                className="app_headerImage"
+              />
+            </center>
+            <Input
+              placeholder="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signUp}>
+              Sign up
+            </Button>
+          </form>
+        </div>
+      </Modal>
+
       <div className="app_header">
         <img
           src="https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png"
