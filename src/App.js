@@ -1,14 +1,41 @@
-import { Button } from "@material-ui/core";
+import { Button, Modal, makeStyles, Input } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 
 const BASE_URL = "http://localhost:8000/";
 
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    position: "absolute",
+    width: 400,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function App() {
+  const classes = useStyles();
+
   const [posts, setPosts] = useState([]);
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
+  const [modalStyle, setModalStyle] = useState(getModalStyle);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     fetch(BASE_URL + "post/all")
@@ -43,8 +70,38 @@ function App() {
       });
   }, []);
 
+  const signIn = (event) => {};
+
   return (
     <div className="app">
+      <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app_signin">
+            <center>
+              <img
+                src="https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png"
+                alt="Instagram"
+                className="app_headerImage"
+              />
+            </center>
+            <Input
+              placeholder="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signIn}>
+              Login
+            </Button>
+          </form>
+        </div>
+      </Modal>
       <div className="app_header">
         <img
           src="https://cdn.icon-icons.com/icons2/2699/PNG/512/instagram_logo_icon_170643.png"
