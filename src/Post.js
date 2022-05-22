@@ -7,6 +7,7 @@ const BASE_URL = "http://localhost:8000/";
 function Post({ post, authToken, authTokenType }) {
   const [imageUrl, setImageUrl] = useState("");
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     if (post.image_url_type === "absolute") {
@@ -41,6 +42,9 @@ function Post({ post, authToken, authTokenType }) {
         console.log(error);
       });
   };
+
+  const postComment = (event) => {};
+
   return (
     <div className="post">
       <div className="post_header">
@@ -52,8 +56,11 @@ function Post({ post, authToken, authTokenType }) {
           </Button>
         </div>
       </div>
+
       <img src={imageUrl} className="post_image" />
+
       <h4 className="post_text">{post.caption}</h4>
+
       <div className="post_comments">
         {comments.map((comment) => (
           <p>
@@ -61,6 +68,26 @@ function Post({ post, authToken, authTokenType }) {
           </p>
         ))}
       </div>
+
+      {authToken && (
+        <form className="post_commentbox">
+          <input
+            type="text"
+            placeholder="Add a comment"
+            className="post_input"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <button
+            className="post_button"
+            type="submit"
+            disabled={!newComment}
+            onClick={postComment}
+          >
+            Post
+          </button>
+        </form>
+      )}
     </div>
   );
 }
